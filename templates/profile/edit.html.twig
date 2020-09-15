@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}- éditez votre profil {% endblock %}
+
+{% block body %}
+{{ form_start(profileForm)}}
+<div class="row">
+        <div class="form-group col-12">
+            <label for="email">Adresse mail</label>
+            {{ form_widget(profileForm.email, {'attr':{'class': 'form-control readonly'}}) }}
+            <span class="text-muted">Vous ne pouvez pas modifier votre adresse mail !</span>                
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="name">Nom</label>
+            {{ form_widget(profileForm.name, {'attr':{'class': 'form-control'}}) }}                
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="surname">Prénom</label>
+            {{ form_widget(profileForm.surname, {'attr':{'class': 'form-control'}}) }}                
+        </div>
+    
+        <div class="form-group col-12">
+            <label for="pseudo">Pseudo</label>
+            {{ form_widget(profileForm.pseudo, {'attr':{'class': 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(profileForm.pseudo)}}</span>                  
+        </div>
+
+        <div class="form-group col-12">
+            <label for="pseudo">Biographie</label>
+            {{ form_widget(profileForm.biographie, {'attr':{'class': 'form-control'}}) }}               
+        </div>
+
+        <div class="form-group col-12">
+            <label for="pseudo">Confirmez votre mot de passe</label>
+            {{ form_widget(profileForm.oldPassword, {'attr':{'class': 'form-control'}}) }}               
+        </div>
+
+         
+
+        <button type="submit" class="btn btn-primary mb-5">Modifier</button>
+    </div>
+
+
+
+{{ form_end(profileForm)}}
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-8 left">
+        <h1> {{ article.title|capitalize }} </h1>
+        <span>Par {{ article.author.pseudo|capitalize }} le {{ article.createdAt|date('d/m/y') }}</span>
+        <img src="{{ asset('uploads/' ~ article.image)|imagine_filter('article') }}" class="img-fluid">
+        <br>
+        <br>
+        <br>
+        <br>
+        {{ article.content|raw }}
+        <hr>
+        <h3>Commentaires:</h3>
+        
+        <br>
+        <p><u></u></p>
+        {% if comments == null %}
+            <br>
+            <p>Pas encore de commentaires</p>
+        {% else %}
+        <div class="row">
+            
+            {% for comment in comments %}
+            {% if comment.isVerified == true %}
+            <br>
+            <div class="col-12 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="card-text text-muted">Par {{ comment.author.pseudo|capitalize }} le {{ comment.commentDate|date("d/m/y")}} </span><br>
+                        {{comment.content|raw }}
+                        {% if app.user %}
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a class="btn-sm btn-danger" href=" {{ path("edit_comment_admin", {'id': comment.id}) }} ">Éditer</a>
+                        {% endif %}
+                        
+                        <a class="float-right btn-sm btn-primary" onclick="replyFunction({{ comment.id }}, '{{ comment.author.pseudo|capitalize }}')" role="button" href="#reply_to_comment">Répondre</a>
+                        {% else %}
+                        <a class="float-right btn-sm btn-info" href="{{ path('app_login') }}" role="button">Répondre (vous devez être connecté)</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+                {% if comment.reply != null %}
+                {% for reply in comment.reply %}
+                    {% if reply.isVerified == true %}
+                    <br>
+                    <div class="col-2 mt-2">
+                    </div>
+                    <div class="col-10 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="card-text text-muted ">Par {{ reply.author.pseudo|capitalize }} le {{ reply.commentDate|date("d/m/y")}} </span><br>
+                                {{reply.content|raw }}
+                                {% if app.user %}
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a class="btn-sm btn-danger" href=" {{ path("edit_reply_admin", {'id': reply.id}) }} ">Éditer</a>
+                                {% endif %}
+                                <a class="float-right btn-sm btn-primary " onclick="replyFunction({{ reply.parent.id }}, '{{ reply.author.pseudo|capitalize }}')" role="button" href="#reply_to_comment">Répondre</a>
+                                {% else %}
+                                <a class="float-right btn-sm btn-info" href="{{ path('app_login') }}" role="button">Répondre (vous devez être connecté)</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    
+                {% endfor %}
+                {% endif %}
+                <div class="col-12 mb-4"></div>  
+            {% endif %}
+            
+            
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        
+
+        {% if app.user %}
+        <div class="d-none" id="reply_to_comment">
+        {{ form_start(replyForm) }}
+            <label id="comment_label" for="content">Votre réponse à :</label>
+            {{ form_widget(replyForm.content) }}
+            <span class="text-danger">{{ form_errors(replyForm.content)}}</span>
+            {{ form_widget(replyForm.parent, {'attr':{'class': 'd-none'}}) }}
+            <br>
+            <input type="submit" name="Répondre" value="Répondre" class="btn btn-primary"> 
+            <a class="btn btn-primary " onclick="commentFunction()" role="button" href="#post_a_comment">Postez votre prorpre commentaire</a> 
+        {{ form_end(replyForm) }}
+        </div>
+
+        
+        
+        <div class="" id="post_a_comment">
+            {{ form_start(commentForm) }}
+            <label for="content">Postez un commentaire:</label>
+            {{ form_widget(commentForm.content) }}
+            <span class="text-danger">{{ form_errors(commentForm.content)}}</span>
+            <br>
+            <input type="submit" name="Commenter" value="Commenter" class="btn btn-primary">
+
+            {{ form_end(commentForm) }}
+        </div>
+
+        {% else %}
+            <h4>Postez un commentaire:</h4>
+            <a class="btn btn-info btn-block" href="{{ path('app_login') }}" role="button">Vous devez être connecté</a>
+        {% endif %}
+        
+        <br><br>
+
+    </div> <!-- Fin de la col-8 (partie-gauche) -->
+
+    {% include "parts/search_sidebar.html.twig" %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+            <script>
+                function replyFunction(parent, personne) {
+                    document.getElementById('reply_parent').setAttribute('value', parent)
+                    document.getElementById('reply_to_comment').setAttribute('class', '')
+                    document.getElementById('post_a_comment').setAttribute('class', 'd-none')
+                    document.getElementById('comment_label').innerHTML = 'votre réponse à ' + personne + ':'
+                }
+
+                function commentFunction() {
+                    document.getElementById('reply_to_comment').setAttribute('class', 'd-none')
+                    document.getElementById('post_a_comment').setAttribute('class', '')
+                }
+            </script>
+{% endblock %}  

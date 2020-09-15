@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+    <h1>Inscription</h1>
+    <hr>
+    {% if app.user %}
+        <p class="h5">Vous êtes déjà connecté en tant que: {{ app.user.email }}. <br> Vous pouvez <a href="{{ path('homepage')}}">retourner à l'accueil</a> ou 
+        <a href="{{ path('app_logout') }}">vous déconnectez</a></p>
+
+    {% else %}
+    {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm._token) }}
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="name">Nom</label>
+            {{ form_widget(registrationForm.name, {'attr':{'class': 'form-control'}}) }}                
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="surname">Prénom</label>
+            {{ form_widget(registrationForm.surname, {'attr':{'class': 'form-control'}}) }}                
+        </div>
+    
+        <div class="form-group col-12">
+            <label for="pseudo">Pseudo</label>
+            {{ form_widget(registrationForm.pseudo, {'attr':{'class': 'form-control'}}) }}
+            <span class="text-muted">Votre pseudo sera la seule information que les autres membres verront !</span>
+            <span class="text-danger">{{ form_errors(registrationForm.pseudo)}}</span>                  
+        </div>
+
+         <div class="form-group col-12">
+            <label for="email">Adresse mail</label>
+            {{ form_widget(registrationForm.email, {'attr':{'class': 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(registrationForm.email)}}</span>                  
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="plainPassword">Mot de passe</label>
+            {{ form_widget(registrationForm.plainPassword.first, {'attr':{'class': 'form-control'}}) }}
+            <span class="text-danger">{{ form_errors(registrationForm.plainPassword.first)}}</span>                
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="plainPassword">Répetez votre mot de passe</label>
+            {{ form_widget(registrationForm.plainPassword.second, {'attr':{'class': 'form-control'}}) }}                
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </div>
+
+    {% endif %}
+{% endblock %}

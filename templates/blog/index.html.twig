@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block header %}
+<header class="bg-dark">
+    <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class=" col-md-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h3 class=" site-heading my-4 mt-3 text-white"> SportFoodYou </h3>
+                        <p class="text-light">citation + image stylé </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block body %}
+    {% if see_all != null %}
+        <div class="row">
+                <a  href=" {{path('homepage', {'see_all': '1'})}} " class="btn btn-secondary btn-block">Voir tous les articles</a>
+        </div>
+    {% endif %}
+    
+    
+    <div class="row">
+        <div class="col-md-8">
+        <br>
+            {% for article in articles %}      
+                <div class="card mb-4">
+                    <div class="card-body">
+                    
+                        <img src="{{ asset('uploads/' ~ article.image)|imagine_filter('article') }}" class="img-fluid">
+                        <h2 class="card-title"><a href="{{ path('show_article', {'slug': article.slug} )}}">{{ article.title|capitalize }}</a></h2>
+                        <p class="card-text text-muted h6">Par {{ article.author.pseudo|capitalize }} le {{ article.createdAt|date("d/m/y")}} </p>
+                        {% for categorie in categories %}
+                        <a href=" {{ path('article_by_category', {'category': categorie.name})}}" class="badge badge-pill badge-secondary">{{categorie.name}}</a>
+                        {% endfor %}
+                        <p class="card-text">{{article.content|u.truncate(150, '...')|raw }}</p>
+                        <a href="{{ path('show_article', {'slug': article.slug} )}}" class="btn btn-primary">Lire la suite</a><br>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {{ knp_pagination_render(articles) }}
+
+        </div>
+        {% include "parts/search_sidebar.html.twig" %}
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+
+
+</script>
+{% endblock %}
+
+

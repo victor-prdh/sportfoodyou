@@ -1,0 +1,44 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+
+    <div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="mb-0 text-gray-800">Utilisateurs</h1>
+        </div>
+
+        <hr>
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Pseudo</th>
+              <th scope="col">Mail</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% set i = 1 %}
+        {% for user in users %}
+            <tr>
+              <th scope="row">{{ i }}</th>
+              <td>{{ user.pseudo }}</td>
+              <td>{{ user.email }} </td>
+              <td><a href=" {{ path('delete_user_admin', {'id': user.id}) }}" class="btn btn-danger" onclick="confirm('Voulez-vous vraiment supprimer cet utilisateur ?')"><i class="fas fa-trash"></i></a></td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}            
+          </tbody>
+        </table>
+
+    </div> 
+    <br><br>
+
+    {% block javascripts %}
+
+    {% endblock %}
+
+{% endblock %}

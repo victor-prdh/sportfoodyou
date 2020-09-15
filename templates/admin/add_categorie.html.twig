@@ -1,0 +1,55 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+
+    <div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="mb-0 text-gray-800">Catégories</h1>
+        </div>
+
+        {{ form_start(form) }}
+          <br>
+          <label for="plainPassword">Nom de la nouvelle catégorie</label>
+          {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom de la nouvelle catégorie', 'autofocus': 'true'}}) }}
+          <span class="text-danger">{{ form_errors(form.name)}}</span>
+
+          <br>
+
+          <input type="submit" name="" value="Valider" class="btn btn-primary">
+        {{ form_end(form) }}
+
+        <hr>
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Catégorie</th>
+              <th scope="col">Nombre d'article</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% set i = 1 %}
+        {% for tag in tags %}
+            <tr>
+              <th scope="row">{{ i }}</th>
+              <td>{{ tag.name }}</td>
+              <td>{{ tag.articles|length }} </td>
+              <td><a href=" {{ path('delete_categorie_admin', {'name': tag.name}) }}" class="btn btn-danger" onclick="confirm('Voulez-vous vraiment supprimer cette catégorie ?')"><i class="fas fa-trash"></i></a></td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}            
+          </tbody>
+        </table>
+
+    </div> 
+    <br><br>
+
+    {% block javascripts %}
+
+    {% endblock %}
+
+{% endblock %}

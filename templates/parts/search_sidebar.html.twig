@@ -1,0 +1,36 @@
+<div class="col-md-4">
+
+    <!-- SEARCHBAR -->
+    <div class="card my-4">
+        <h5 class="card-header">Recherche</h5>
+        <div class="card-body">
+                <div class="input-group col-12">
+                    <span class="text-muted">Rechercher un de nos articles grâce à son titre: </span>
+                    {{ form_start(searchForm) }}
+                        {{ form_widget(searchForm.search, { 'attr':{'class':'form-control form-control-lg', 'placeholder': 'Rechercher' }}) }}
+                    {{ form_end(searchForm) }}
+                </div>                    
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="card my-4">
+        <h5 class="card-header">Catégories</h5>
+        <div class="card-body">
+            <ul class="list-group">
+                
+            {% for categorie in categories %}
+                <a href=" {{ path('article_by_category', {'category': categorie.name})}}"><li class="list-group-item">{{categorie.name}}</li></a>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- A PROPOS -->
+    <div class="card my-4">
+        <h5 class="card-header">A propos de nous</h5>
+        <div class="card-body">
+            <p class="card-text"> Sur ce blog vous trouverez tout ce qu'il vous faut pour vous améliorez physiquement. Grâce à de nombreux articles de qualité.....etc</p>
+        </div>
+    </div>
+</div>

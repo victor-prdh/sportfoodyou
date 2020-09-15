@@ -1,0 +1,28 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="mb-0 text-gray-800">Modifier l'article</h1>
+          <a href="{{ path('article_admin') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-newspaper fa-sm text-white-50"></i> Gérer les articles</a>
+        </div>
+
+        {% include "includes/article_form.html.twig" %}
+    </div> 
+    <br><br>
+
+    {% block javascripts %}
+        <script>
+            $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+
+
+        </script>
+    {% endblock %}
+
+{% endblock %}

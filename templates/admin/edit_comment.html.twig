@@ -1,0 +1,44 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="mb-0 text-gray-800">Commentaire</h1>
+          <a href="{{ path('comment_admin') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-comments fa-sm text-white-50"></i> Retour au commentaires</a>
+        </div>
+        <br>
+
+
+    {{ form_start(form) }}
+            <label for="content">Modifier le commentaire:</label>
+            {{ form_widget(form.content) }}
+            <span class="text-danger">{{ form_errors(form.content)}}</span>
+            <br>
+            {% if comment.isVerified %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck" name="isVerified" checked>
+                <label class="form-check-label" for="gridCheck">
+                    Commentaire vérifié
+                </label>
+            </div>
+
+            {% else %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" name="isVerified">
+                    <label class="form-check-label" for="gridCheck">
+                        Commentaire vérifié 
+                    </label>
+                </div>
+            {% endif %}
+            
+            <br>
+            <input type="submit" name="Commenter" value="Modifier" class="btn btn-primary">
+
+            {{ form_end(form) }}
+
+    {% block javascripts %}
+
+    {% endblock %}
+
+{% endblock %}

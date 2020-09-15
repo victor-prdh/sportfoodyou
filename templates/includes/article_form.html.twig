@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+
+    <div class="custom-file">
+		{{ form_widget(form.image, {'attr': {'class': 'custom-file-input', 'id': 'customFileLang', 'lang': 'fr'}}) }}
+        <label class="custom-file-label" for="inputGroupFile02">importer une image </label>
+        
+    </div>
+        <br><br>
+		<label for="plainPassword">Titre de l'article</label>
+		{{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Titre de l\'article '}}) }}
+
+        <br>
+		<label for="plainPassword">Lien de l'article</label>
+        {{ form_widget(form.slug, {'attr': {'class': 'form-control', 'placeholder': 'Lien de l\'article '}}) }}
+		<span class="text-danger">{{ form_errors(form.slug)}}</span>
+        <small id="fileHelp" class="form-text text-muted">Important pour le référencement. format conseillé: titre-de-l-article (sans majuscule ni accent).</small>
+        <br><br>
+
+		<label for="content">Contenu de l'article</label>
+		{{ form_widget(form.content) }}
+
+        <br>
+
+		<label for="tags">Tags de l'article</label>
+		<br>
+		<div class="row">
+			{% for tag in form.tags %}
+				<div class="col-md-4 list-group h5 mb-5">
+					<label class="text-center">{{ form_label(tag) }}</label>
+					{{ form_widget(tag, {'attr': {'class': 'form-control'}})}}
+				</div>
+			{% endfor %}
+		</div>
+		<br><br><br><hr>
+		<p>
+			<label>
+		        {{ form_widget(form.isPublished, {'attr': {'class': 'filled-in'}}) }}
+		        <span>Publier</span>
+	      	</label>
+      	</p>
+
+        <br>
+
+		<input type="submit" name="" value="Enregistrer" class="btn btn-primary">
+
+{{ form_end(form) }}

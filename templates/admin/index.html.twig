@@ -1,0 +1,130 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="mb-0 text-gray-800">Accueil</h1>
+            <a href="{{ path('homepage') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-check-circle fa-sm text-white-50"></i> Retourner sur le blog</a>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Articles Card  --> 
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <a href=" {{ path('article_admin') }} ">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Article publié</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ articles|length }} </div>
+                      </a>
+                    </div>
+                    <div class="col-auto">
+                    <a href=" {{ path('article_admin') }} ">
+                      <i class="fas fa-newspaper fa-2x text-gray-300"></i>
+                      </a>
+                    </div>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Users card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <a href=" {{ path('user_admin') }} ">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Nombre de comptes</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ users|length }}</div>
+                      </a>
+                    </div>
+                    <div class="col-auto">
+                      <a href=" {{ path('user_admin') }} ">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Commentary card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <a href=" {{ path('comment_admin') }} ">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Commentaires reçu</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ comments|length + replys|length }}</div>
+                        </div>
+                      </div>
+                      </a>
+                      
+                    </div>
+                    <div class="col-auto">
+                      <a href=" {{ path('comment_admin') }} ">
+                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tags card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <a href=" {{ path('categorie_admin') }} ">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Catégories existante</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ tags|length }}</div>
+                      </a>
+                    </div>
+                    <div class="col-auto">
+                      <a href=" {{ path('categorie_admin') }} ">
+                      <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+           
+          <!-- Content Row -->
+          <div class="row">
+
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            <br><br>
+            
+          </div>
+
+
+
+
+
+{% endblock %}

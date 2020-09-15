@@ -1,0 +1,90 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+
+    <div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="mb-0 text-gray-800">Commentaires</h1>
+        </div>
+
+        <hr>
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Auteur</th>
+              <th scope="col">Commentaire</th>
+              <th scope="col">Date</th>
+              <th scope="col">Vérifié</th>              
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% set i = 1 %}
+        {% for comment in comments %}
+            <tr>
+              <th scope="row">{{ i }}</th>
+              <td>{{ comment.author.pseudo }}</td>
+              <td>{{ comment.content|raw|u.truncate(50, '...')|raw }} </td>
+              <td>{{ comment.commentDate|date("d/m/y")}}</td>
+              <td>{% if comment.isVerified %}
+                  <span class="badge badge-success">Vérifié</span>
+                  {% else %}
+                    <span class="badge badge-danger">Non vérifié</span>
+                  {% endif %}
+              </td>
+              <td><a href=" {{ path('edit_comment_admin', {'id': comment.id}) }}" class="btn btn-primary" ><i class="fas fa-edit"></i></a>
+              <a href=" {{ path('delete_comment_admin', {'id': comment.id}) }}" class="btn btn-danger" onclick="confirm('Voulez-vous vraiment supprimer ce commentaire ?')"><i class="fas fa-trash"></i></a></td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}            
+          </tbody>
+        </table>
+
+      <hr>
+      <h1>Réponse</h1>
+
+      <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Auteur</th>
+              <th scope="col">Commentaire</th>
+              <th scope="col">Date</th>
+              <th scope="col">Vérifié</th>              
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% set i = 1 %}
+        {% for reply in replys %}
+            <tr>
+              <th scope="row">{{ i }}</th>
+              <td>{{ reply.author.pseudo }}</td>
+              <td>{{ reply.content|raw|u.truncate(50, '...')|raw }} </td>
+              <td>{{ reply.commentDate|date("d/m/y")}}</td>
+              <td>{% if reply.isVerified %}
+                  <span class="badge badge-success">Vérifié</span>
+                  {% else %}
+                    <span class="badge badge-danger">Non vérifié</span>
+                  {% endif %}
+              </td>
+              <td><a href=" {{ path('edit_reply_admin', {'id': reply.id}) }}" class="btn btn-primary" ><i class="fas fa-edit"></i></a>
+              <a href=" {{ path('delete_reply_admin', {'id': reply.id}) }}" class="btn btn-danger" onclick="confirm('Voulez-vous vraiment supprimer cette réponse ?')"><i class="fas fa-trash"></i></a></td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}            
+          </tbody>
+        </table>
+
+    </div> 
+    <br><br>
+
+    {% block javascripts %}
+
+    {% endblock %}
+
+{% endblock %}
